@@ -26,7 +26,7 @@ The stages are designed to be run **one command at a time**, checking the output
 - [Logs](#logs)
 - [Tuning](#tuning)
 - [Known issues and gotchas](#known-issues-and-gotchas)
-- [License](#license)
+
 
 ---
 
