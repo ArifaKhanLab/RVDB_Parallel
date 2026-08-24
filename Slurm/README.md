@@ -1,4 +1,4 @@
-# run_slurm_pipeline.sh
+# RVDB Parallelized Production Pipeline Scripts (HPC SLURM Version)
 
 
 ## Purpose
