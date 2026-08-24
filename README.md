@@ -25,7 +25,7 @@ Two implementations are provided. They perform identical work and produce identi
 | Scope of parallelism | Cores within one machine | Across allocated cluster nodes |
 | How you run it | Interactively, one command at a time | Submit and monitor through the queue |
 | Best when | You have one large multi-core node and want direct control | You have cluster access and are processing a full release |
-| **Documentation** | **[Standalone/README.md](https://github.com/ArifaKhanLab/RVDB_Parallel/blob/main/Standalone/README.md)** | **[Slurm/run_slurm_pipeline.sh.md](https://github.com/ArifaKhanLab/RVDB_Parallel/blob/main/Slurm/README.md)** |
+| **Documentation** | **[Standalone/README.md](https://github.com/ArifaKhanLab/RVDB_Parallel/blob/main/Standalone/README.md)** | **[Slurm/README.md](https://github.com/ArifaKhanLab/RVDB_Parallel/blob/main/Slurm/README.md)** |
 
 > **Not sure?** Start with the Standalone version. It has fewer moving parts, its stages can be run and inspected one at a time, and it requires no scheduler configuration. Move to the Slurm version when a single node is no longer sufficient.
 
