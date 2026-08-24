@@ -1,4 +1,4 @@
-# RVDB Parallelized Production Pipeline Scripts
+# RVDB Parallelized Production Pipeline Scripts (Standalone Version)
 
 GNU Parallel wrappers that replace three single-threaded Python stages of the RVDB Module 1 update pipeline with file-level parallel equivalents.
 
