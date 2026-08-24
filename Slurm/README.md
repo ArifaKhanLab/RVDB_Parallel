@@ -1,8 +1,6 @@
 # run_slurm_pipeline.sh
 
 
----
-
 ## Purpose
 
 Top-level orchestration script for the RVDB GenBank processing pipeline.
