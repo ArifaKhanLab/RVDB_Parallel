@@ -1,0 +1,51 @@
+#!/bin/bash
+#SBATCH --job-name=join_headers_poskw        	# Job name
+#SBATCH --output=sysout_join/%x_%j.out   		# Standard output file (%j = Job ID)
+#SBATCH --error=sysout_join/%x_%j.err    # Standard error file
+#SBATCH --ntasks=1                    # Number of tasks
+#SBATCH --cpus-per-task=1             # CPUs per task
+#SBATCH --mem=10GB                   # Memory requested
+#SBATCH --time=4:00:00   
+
+# how to run:
+# sbatch /scratch/mikem/UserSupport/pei-ju.chin/rvdb_parallel_array_job/join_headers_poskw.sh
+
+# POSKW_OUTDIR="/scratch/mikem/UserSupport/pei-ju.chin/rvdb_parallel_array_job/RVDBv32.0/GenBank_raw_data_may.2026/poskw_out_may.2026"
+POSKW_OUTDIR=$1
+  
+# LOGDIR=sysout_join
+# mkdir -p $LOGDIR
+# LOG_SCRIPT=$LOGDIR/join_headers_poskw.txt 
+
+#> $LOG_SCRIPT # truncate it to zero bytes (i.e., erase its contents), while still keeping the file.
+
+# Function to join files with a given prefix and remove the original files
+join_files_poskw() {
+
+	local prefix="headers_pscreen_"
+	local output_file="${POSKW_OUTDIR}/headers_pscreen.txt"
+
+	# Check if any files with the given prefix exist
+	if ls "${POSKW_OUTDIR}/${prefix}"* 1> /dev/null 2>&1; then
+	    # Concatenate all files with the given prefix into the output file
+	    cat "${POSKW_OUTDIR}/${prefix}"* > "${output_file}"
+
+	    # Remove the original files (but not the output file)
+	    for file in "${POSKW_OUTDIR}/${prefix}"*; do
+
+	    	# Debug
+	    	echo "file = $file" # >> $LOG_SCRIPT
+
+	      if [[ "$file" != "$output_file" ]]; then
+	        rm "$file"
+	      fi
+	    done
+
+	    echo "Files with prefix '${prefix}' have been joined into '${output_file}' and the original files have been removed." # >> $LOG_SCRIPT
+	else
+	    echo "No files found with the prefix '${prefix}'. No action taken." # >> $LOG_SCRIPT
+	fi
+}
+
+# Call join
+join_files_poskw
