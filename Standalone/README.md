@@ -455,10 +455,6 @@ Documented as-is; none has been changed in the scripts.
 
 ---
 
-## License
-
-*TODO: add a license before publishing.*
-
 ## Citation
 
 If you use RVDB, please cite the Reference Viral DataBase project — see <https://rvdb.dbi.udel.edu/> for the current citation.
