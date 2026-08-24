@@ -25,8 +25,6 @@ The stages are designed to be run **one command at a time**, checking the output
 - [Stage-by-stage data flow](#stage-by-stage-data-flow)
 - [Logs](#logs)
 - [Tuning](#tuning)
-- [Known issues and gotchas](#known-issues-and-gotchas)
-
 
 ---
 
@@ -424,34 +422,6 @@ grep -l "Not enough space" RVDBv$RVDB_VER/GenBank_raw_data_$RVDB_DATE/logs_*/*.l
 
 **Timing.** Each stage is wrapped in `time`, so wall-clock per stage appears on stdout. `log_script.txt` additionally separates parallel-processing time from join time.
 
----
-
-## Known issues and gotchas
-
-Documented as-is; none has been changed in the scripts.
-
-### Functional
-
-- **`ECONDS=0` in `step3_poskw_gb_v2.sh`** — a typo for `SECONDS=0`. That stage's reported parallel duration is measured from script start rather than from the intended reset point. Cosmetic, but the number is wrong.
-- **Unquoted `$(cat LIST)` in every `parallel` call.** `::: $(cat $FASTA_LIST)` word-splits on whitespace, so a filename containing a space is silently split into multiple bogus jobs. Using `parallel -a "$FASTA_LIST"` or `:::: "$FASTA_LIST"` avoids this. Not an issue for NCBI-standard filenames.
-- **No `nullglob` guard when building the shard lists.** If a glob matches nothing, bash passes the literal pattern through and the list file receives one line reading `gb*.seq.jun.2025`. The stage then launches exactly one job, which fails on a nonexistent file.
-  > **A stage that "runs but produces nothing" almost always means the previous stage produced no output, or the date tag does not match.** Check the list file first:
-  > ```bash
-  > cat list_fasta.txt | head
-  > ```
-- **`exit` at the end of each `process_*` function**, marked `# debug` in the source. It terminates the Parallel child shell rather than returning. This works because each job runs in its own subshell, but it would suppress any code appended after the call site inside the function.
-
-### Cosmetic / logging
-
-- Several workers log `$RAMDISK_AVAILABLE` in the insufficient-space branch, but the variable actually set is `$RAMDISK_AVAILABLE_BYTES`. The message prints an empty value.
-- `step3_poskw_tpa_v2.sh` writes to `logs_sizemirna_<ts>/` instead of `logs_poskw_<ts>/`.
-- Several workers print `================= Start …` at both the beginning *and* the end of the log. `step3_negkw_gb_v2.sh` and `step3_sizemirna_tpa_v2.sh` correctly print `End`.
-
-### Portability
-
-- `stat -c`, `df -P`, `find -printf` and `date +%s%N` are GNU-specific. macOS/BSD requires `coreutils` and `findutils`, with the `g`-prefixed binaries on `PATH`.
-- `HOMEDIR=$(pwd)` in `config.sh` and `EXT_FILES_BASE=./` in `step2_v4_3.sh` mean the scripts must be launched from the project root. There is no check.
-- `RAMDISK` is hardcoded to `/dev/shm` in every stage.
 
 ---
 
