@@ -1,4 +1,4 @@
-# RVDB Parallelized Production Pipeline Scripts (HPC SLURM Version)
+# RVDB Parallelized Production Pipeline Scripts (HPC Slurm Version)
 
 
 ## Purpose
