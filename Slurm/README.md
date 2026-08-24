@@ -1,7 +1,5 @@
 # run_slurm_pipeline.sh
 
-**Location:**
-`/scratch/mikem/UserSupport/pei-ju.chin/rvdb_parallel_array_job/run_slurm_pipeline.sh`
 
 ---
 
